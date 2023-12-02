@@ -1,9 +1,20 @@
+<app-add-to-do></app-add-to-do> 
 <mat-card>
-    Test Data home
-
+    TO DO Home Page
+  <mat-card-content>
     <ul>
-        <li class="text" *ngFor="let item of items | async">
+      <li class="text" *ngFor="let item of filteredToDos$ | async">
+        <mat-radio-button  (change)="setAsCompleted(item)" [disabled]="item.isCompleted">
           {{item.title}}
-        </li>
-      </ul>
+        </mat-radio-button>
+      </li>
+    </ul>
+  </mat-card-content>
+  <mat-card-footer>
+    <span>{{totalItemsLeft}} items remaining</span>
+    <button mat-flat-button (click)="setFilterState(FilterState.All)">All</button>
+    <button mat-flat-button (click)="setFilterState(FilterState.Active)" >Active</button>
+    <button mat-flat-button (click)="setFilterState(FilterState.Completed)">Completed</button>
+    <button mat-flat-button>Clear Completed</button>
+  </mat-card-footer>
 </mat-card>

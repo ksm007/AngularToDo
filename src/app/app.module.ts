@@ -10,11 +10,20 @@ import {MatCardModule} from '@angular/material/card';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import {AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
+import { HeaderComponent } from './header/header.component';
+import { AddToDoComponent } from './add-to-do/add-to-do.component';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatInputModule} from '@angular/material/input';
+import {ReactiveFormsModule} from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
-    LoginComponent
+    LoginComponent,
+    HeaderComponent,
+    AddToDoComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +31,12 @@ import { environment } from 'src/environments/environment';
     BrowserAnimationsModule,
     MatCardModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule 
+    AngularFirestoreModule ,
+    MatRadioModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

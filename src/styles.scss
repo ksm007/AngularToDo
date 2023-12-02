@@ -1,4 +1,18 @@
 @import "./scss/styles";
 
-html, body { height: 100%; }
+html, body { height: 100%;
+font-size: 18px; 
+background-image: url(assets/grad1.jpg);
+background-repeat: no-repeat;
+@media screen and (max-width:375px) {
+background-image: url(assets/grad2.jpg);
+    
+}}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-form-field-underline{
+    display: none;
+}
+.mat-form-field-wrapper{
+    padding: 0px;
+}
