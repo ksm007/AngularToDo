@@ -1,8 +1,50 @@
-mat-card{
+mat-card {
     margin-top: 1rem;
+    padding: 0;
 }
 
-mat-card-footer{
+mat-card-footer {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    @media screen and (max-width:375px) {
+        margin-right: 0;
+    }
+}
+
+span.completed {
+    text-decoration: line-through;
+    padding-left: 6px;
+}
+
+.filter-container {
+    button {
+        padding: 0 2px;
+
+        &.active-filter {
+            color: rgb(243, 195, 133);
+        }
+    }
+
+    &.filter-container--mobile {
+        margin-top: 1rem;
+    }
+}
+
+mat-list-item {
+    position: relative;
+    border-bottom: 1px solid hsl(0, 2%, 54%);
+    .delete-todo-button {
+        display: none;
+        position: absolute;
+        right: 0;
+    }
+
+    &:hover {
+        .delete-todo-button {
+            display: inline;
+        }
+    }
 }

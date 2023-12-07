@@ -46,6 +46,5 @@ $AngularToDo-dark-theme: mat.define-dark-theme((
 
 
 .dark-theme{
-@include mat.all-component-themes($AngularToDo-dark-theme);
-
+@include mat.all-component-colors($AngularToDo-dark-theme);
 }

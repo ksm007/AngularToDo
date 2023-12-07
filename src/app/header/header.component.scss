@@ -1,0 +1,22 @@
+.page-header-container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    h2{
+        letter-spacing: 10px;
+        font-size: 45px;
+        font-weight: 800;
+    }
+
+}
+
+nav{
+    display: flex;
+    justify-content: right;
+}
+
+mat-icon{
+    height: 40px;
+    width: 40px;
+}

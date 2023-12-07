@@ -1,20 +1,48 @@
-<app-add-to-do></app-add-to-do> 
+<app-add-to-do></app-add-to-do>
 <mat-card>
-    TO DO Home Page
   <mat-card-content>
-    <ul>
-      <li class="text" *ngFor="let item of filteredToDos$ | async">
-        <mat-radio-button  (change)="setAsCompleted(item)" [disabled]="item.isCompleted">
-          {{item.title}}
-        </mat-radio-button>
-      </li>
-    </ul>
+    <mat-list role="list" *ngIf="filteredToDos$">
+      <mat-list-item role="listitem" *ngFor="let item of filteredToDos$ | async">
+        <ng-container *ngIf="item.isCompleted; else elseBlock">
+          <mat-icon svgIcon="icon-check" class="icon-check"></mat-icon>
+          <span class="completed"> {{item.title}}
+          </span>
+        </ng-container>
+        <ng-template #elseBlock>
+          <mat-radio-button (change)="setAsCompleted(item)" [checked]="item.isCompleted" [disabled]="item.isCompleted">
+            {{item.title}}
+          </mat-radio-button>
+        </ng-template>
+        <button class="delete-todo-button" mat-icon-button (click)="deleteSingleItem(item)">
+          <mat-icon svgIcon="icon-cross"></mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
   </mat-card-content>
   <mat-card-footer>
     <span>{{totalItemsLeft}} items remaining</span>
-    <button mat-flat-button (click)="setFilterState(FilterState.All)">All</button>
-    <button mat-flat-button (click)="setFilterState(FilterState.Active)" >Active</button>
-    <button mat-flat-button (click)="setFilterState(FilterState.Completed)">Completed</button>
-    <button mat-flat-button>Clear Completed</button>
+    <div class="filter-container" *ngIf="!isSmallScreen">
+      <button mat-flat-button [ngClass]="{'active-filter': isFilterActive(FilterState.All)}"
+        (click)="setFilterState(FilterState.All)">All</button>
+      <button mat-flat-button [ngClass]="{'active-filter': isFilterActive(FilterState.Active)}"
+        (click)="setFilterState(FilterState.Active)">Active</button>
+      <button mat-flat-button [ngClass]="{'active-filter': isFilterActive(FilterState.Completed)}"
+        (click)="setFilterState(FilterState.Completed)">Completed</button>
+    </div>
+    <button mat-flat-button (click)="clearCompleted()">Clear Completed</button>
   </mat-card-footer>
+</mat-card>
+
+<mat-card *ngIf="isSmallScreen">
+  <mat-card-content>
+    <div class="filter-container">
+      <button mat-flat-button [ngClass]="{'active-filter': isFilterActive(FilterState.All)}"
+        (click)="setFilterState(FilterState.All)">All</button>
+      <button mat-flat-button [ngClass]="{'active-filter': isFilterActive(FilterState.Active)}"
+        (click)="setFilterState(FilterState.Active)">Active</button>
+      <button mat-flat-button [ngClass]="{'active-filter': isFilterActive(FilterState.Completed)}"
+        (click)="setFilterState(FilterState.Completed)">Completed</button>
+
+    </div>
+  </mat-card-content>
 </mat-card>

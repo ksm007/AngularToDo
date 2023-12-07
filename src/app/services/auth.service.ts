@@ -45,14 +45,18 @@ export class AuthService {
   async signUpWithEmail(email: string, password: string) {
     try {
       await this.auth.createUserWithEmailAndPassword(email,password);
-      this.router.navigateByUrl('/');
     }
     catch (e) {
       console.log(e);
     }
   }
 
-  signOut() {
-
-  }
+  async signOut() {
+    try {
+      await this.auth.signOut();
+      this.router.navigateByUrl('/login');
+    }
+    catch (e) {
+      console.log(e);
+    }  }
 }

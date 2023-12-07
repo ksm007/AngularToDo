@@ -16,3 +16,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-form-field-wrapper{
     padding: 0px;
 }
+
+.icon-check {
+    border-radius: 90px;
+    background: linear-gradient(hsl(17, 66%, 60%), hsl(31, 69%, 69%));
+    position: relative;
+    svg {
+        position: absolute;
+        top: 8px;
+        left: 6px;
+    }
+}

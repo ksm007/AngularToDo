@@ -1,6 +1,6 @@
 <div class="container">
-  <app-header></app-header>
+  <app-header [pageTitle] = 'pageTitle'></app-header>
   <main>
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="changePageHeader()"></router-outlet>
   </main>
 </div>

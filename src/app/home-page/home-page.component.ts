@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { User } from '../models/user';
 import { toDoInputModel } from '../models/toDoInputModel';
+import { BreakpointObserver, LayoutModule } from '@angular/cdk/layout';
 
 enum FilterState {
   All = 'All',
@@ -21,12 +22,17 @@ export class HomePageComponent implements OnInit {
   filteredToDos$!: Observable<any[]>;
   totalItemsLeft?: number;
   FilterState = FilterState;
+  user: User | null = null;
   activeFilter: BehaviorSubject<FilterState> = new BehaviorSubject<FilterState>(FilterState.All);
+  isSmallScreen: boolean;
 
   constructor(private fireStore: AngularFirestore,
-    private authService: AuthService) {
+    private authService: AuthService, private breakpointObserver: BreakpointObserver) {
+
     this.authService.user$.subscribe((user: User | null) => {
+    
       if (user) {
+        this.user = user;
         this.items$ = this.fireStore.collection("todos", ref => ref.where('userId', '==', user.uid))
           .valueChanges({ idField: 'id' });
         this.items$.pipe(
@@ -37,8 +43,13 @@ export class HomePageComponent implements OnInit {
         this.getToDos();
       }
     });
+    this.isSmallScreen = breakpointObserver.isMatched('(max-width: 375px)');
   }
   ngOnInit(): void {
+  }
+
+  isFilterActive(filterState:FilterState){
+    return this.activeFilter.getValue() === filterState;
   }
 
   getToDos() {
@@ -59,7 +70,22 @@ export class HomePageComponent implements OnInit {
     this.activeFilter.next(filterState);
   }
   clearCompleted() {
-
+    if(this.user&& this.items$){
+      this.fireStore.collection<toDoInputModel>("todos", ref => ref
+      .where('userId', '==', this.user?.uid)
+      .where('isCompleted', '==',true))
+      .get()
+      .pipe( 
+        map((qs: QuerySnapshot<toDoInputModel>) =>{
+          return qs.docs;
+        })
+        )
+      .subscribe((documents: QueryDocumentSnapshot<toDoInputModel>[]) =>{
+        documents.forEach( (document:QueryDocumentSnapshot<toDoInputModel>) =>{
+          document.ref.delete();
+        });
+      });
+    }
   }
 
   setAsCompleted(item: toDoInputModel) {
@@ -67,5 +93,10 @@ export class HomePageComponent implements OnInit {
     toDoDoc.update({
       isCompleted: true
     });
+  }
+
+  deleteSingleItem(item:toDoInputModel){
+    const toDoDoc = this.fireStore.doc(`todos/${item.id}`);
+    toDoDoc.delete();
   }
 }
