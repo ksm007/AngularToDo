@@ -32,7 +32,6 @@ export class AddToDoComponent implements OnInit {
         userId: this.user.uid,
         title: inputValue
       });
-
     }
 
   }

@@ -2,3 +2,14 @@ mat-card-content{
     display: flex;
     align-content: center;
 }
+
+mat-card{
+    @media screen and (max-width: 375px){
+        width: max-content;
+        display: block;
+        position: relative;
+        padding: 0px 8px 0px 4px;
+        height: 120px;
+        border-radius: 4px;
+    }
+}

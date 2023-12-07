@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import firebase from 'firebase';
 import { AuthService } from '../services/auth.service';
 import { FormControl, Validators } from '@angular/forms';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -16,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   getErrorMessage() {
     if (this.email.hasError('required')) {
-      return 'You must enter a value';
+      return 'Enter a valid E-mail';
     }
 
     return this.email.hasError('email') ? 'Not a valid email' : '';
