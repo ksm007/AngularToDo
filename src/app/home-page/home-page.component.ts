@@ -43,7 +43,7 @@ export class HomePageComponent implements OnInit {
         this.getToDos();
       }
     });
-    this.isSmallScreen = breakpointObserver.isMatched('(max-width: 375px)');
+    this.isSmallScreen = this.breakpointObserver.isMatched('(max-width: 375px)');
   }
   ngOnInit(): void {
   }

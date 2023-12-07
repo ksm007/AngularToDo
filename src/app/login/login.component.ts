@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase';
 import { AuthService } from '../services/auth.service';
 import { FormControl, Validators } from '@angular/forms';
+import { BreakpointObserver } from '@angular/cdk/layout';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,7 +12,7 @@ import { FormControl, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
-
+  isSmallScreen: boolean;
 
   getErrorMessage() {
     if (this.email.hasError('required')) {
@@ -20,7 +21,10 @@ export class LoginComponent implements OnInit {
 
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,private breakpointObserver: BreakpointObserver) {
+    this.isSmallScreen = this.breakpointObserver.isMatched('(max-width: 375px)');
+
+   }
 
   ngOnInit(): void {
   }
@@ -28,6 +32,7 @@ export class LoginComponent implements OnInit {
     if (this.email.value && this.password.value) {
       this.authService.signInWithEmail(this.email.value, this.password.value);
     }
+
   }
   logOut() {
     this.authService.signOut();
