@@ -2,6 +2,7 @@ import { Component, OnInit, Renderer2,Input } from '@angular/core';
 import { ThemeService, Theme } from '../services/theme.service';
 import { AuthService } from '../services/auth.service';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +20,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private renderer: Renderer2,
     private themeService: ThemeService,
-    private auth: AuthService) { }
+    private auth: AuthService,private router:Router) { }
 
   ngOnInit(): void {
     this.initialzeTheme();
@@ -54,5 +55,8 @@ export class HeaderComponent implements OnInit {
   }
   logOut(){
     this.auth.signOut();
+  }
+  navigateToLogin(){
+    this.router.navigate(['/login']);
   }
 }

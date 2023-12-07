@@ -7,6 +7,9 @@
         letter-spacing: 10px;
         font-size: 45px;
         font-weight: 800;
+        @media screen and (max-width:375px) {
+            color: aliceblue;
+        }
     }
 
 }
